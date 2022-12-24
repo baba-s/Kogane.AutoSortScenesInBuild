@@ -17,7 +17,10 @@ namespace Kogane.Internal
             var pathList = AutoSortScenesInBuildSetting.instance.PathList;
 
             EditorBuildSettings.scenes = EditorBuildSettings.scenes
+                    .Skip( 1 )
                     .OrderBy( ｘ => pathList.Any( y => ｘ.path.StartsWith( y ) ) )
+                    .ThenBy( x => x.path )
+                    .Prepend( EditorBuildSettings.scenes[ 0 ] )
                     .ToArray()
                 ;
         }
